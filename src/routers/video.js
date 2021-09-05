@@ -12,7 +12,7 @@ router.post('/video', async (req, res) => {
     res.status(201).send(video)
   } catch (err) {
     console.log(err)
-    res.status(400).send(err)
+    res.status(400).send()
   }
 })
 
@@ -39,7 +39,7 @@ router.get('/videos', async (req, res) => {
 
     res.send(videos)
   } catch (err) {
-    console.log('ERR :::', err)
+    console.log(err)
     res.status(400).send()
   }
 })
