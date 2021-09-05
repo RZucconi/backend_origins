@@ -2,7 +2,7 @@
 
 ## Hello & Welcome!
 
-## This REST API using a Postgres data base.
+## This is REST API using a Postgres data base.
 
 ## Installation process:
 
