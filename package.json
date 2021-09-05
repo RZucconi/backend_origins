@@ -16,12 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.12",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5"
   },
   "devDependencies": {
+    "nodemon": "^2.0.12",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
     "env-cmd": "^10.1.0",
