@@ -1,0 +1,30 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "This is a Tech Test for Backend dev",
+  "main": "index.js",
+  "scripts": {
+    "start": "env-cmd -f ./.env/dev.env node ./src/index.js",
+    "dev": "env-cmd -f ./.env/dev.env nodemon ./src/index.js",
+    "dev+test": "npm run test && npm run dev",
+    "test": "env-cmd -f ./.env/test.env sequelize-cli db:migrate:undo:all && env-cmd -f ./.env/test.env sequelize-cli db:migrate && env-cmd -f ./.env/test.env mocha --exit",
+    "db:migrate": "env-cmd -f ./.env/test.env sequelize-cli db:migrate && env-cmd -f ./.env/dev.env sequelize-cli db:migrate",
+    "db:migrate:undo": "env-cmd -f ./.env/test.env sequelize-cli db:migrate:undo:all && env-cmd -f ./.env/dev.env sequelize-cli db:migrate:undo:all"
+  },
+  "keywords": [],
+  "author": "Romain Zucconi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "env-cmd": "^10.1.0",
+    "mocha": "^9.1.1"
+  }
+}
