@@ -100,9 +100,6 @@ describe('/Video Test Collection' , () => {
     .send(video)
     .end((err, res) => {
       res.should.have.status(400)
-      res.body.should.a('object')
-      const actualVal = res.body.parent.name
-      expect(actualVal).to.be.equal('error')
       done()
     })
   })
