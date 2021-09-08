@@ -2,14 +2,14 @@
 
 ### Hello & Welcome!
 
-### This is REST API using a Postgres data base.
+### This is REST API using a Postgres database.
 
 ### Installation process:
 
-###  1 - npm install
-###  2 - create a .env folder
-###  3 - create two env files named dev.env & test.env
-###  4 - create your postgres database
-###  5 - edit them and register your DB_HOST, PORT, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOSTNAME & NODE_ENV(development for dev.env & test for test.env)
-###  6 - run a script
-###  7 - enjoy !!
+###  1 - run your postgresql server and create your postgres database
+###  In your current folder: 
+###  2 - npm install
+###  3 - mkdir env && touch ./env/dev.env && touch ./env/test.env
+###  4 - edit them and register your DB_HOST, PORT, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOSTNAME, NODE_ENV (development for dev.env & test for test.env) & JWT_SECRET
+###  5 - run a script
+###  6 - enjoy !!
