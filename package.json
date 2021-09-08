@@ -4,13 +4,13 @@
   "description": "This is a Tech Test for Backend dev",
   "main": "index.js",
   "scripts": {
-    "start": "env-cmd -f ./.env/dev.env node ./src/index.js",
-    "dev": "env-cmd -f ./.env/dev.env nodemon ./src/index.js",
+    "start": "env-cmd -f ./env/dev.env node ./src/index.js",
+    "dev": "env-cmd -f ./env/dev.env nodemon ./src/index.js",
     "dev+test": "npm run test && npm run dev",
-    "test": "env-cmd -f ./.env/test.env sequelize-cli db:migrate:undo:all && env-cmd -f ./.env/test.env sequelize-cli db:migrate && env-cmd -f ./.env/test.env mocha --exit",
-    "db:migrate": "env-cmd -f ./.env/test.env sequelize-cli db:migrate && env-cmd -f ./.env/dev.env sequelize-cli db:migrate",
-    "db:migrate:undo": "env-cmd -f ./.env/test.env sequelize-cli db:migrate:undo && env-cmd -f ./.env/dev.env sequelize-cli db:migrate:undo",
-    "db:migrate:undo:all": "env-cmd -f ./.env/test.env sequelize-cli db:migrate:undo:all && env-cmd -f ./.env/dev.env sequelize-cli db:migrate:undo:all"
+    "test": "env-cmd -f ./env/test.env sequelize-cli db:migrate:undo:all && env-cmd -f ./env/test.env sequelize-cli db:migrate && env-cmd -f ./env/test.env mocha --exit",
+    "db:migrate": "env-cmd -f ./env/dev.env sequelize-cli db:migrate",
+    "db:migrate:undo": "env-cmd -f ./env/dev.env sequelize-cli db:migrate:undo",
+    "db:migrate:undo:all": "env-cmd -f ./env/dev.env sequelize-cli db:migrate:undo:all"
   },
   "keywords": [],
   "author": "Romain Zucconi",
@@ -18,6 +18,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5"

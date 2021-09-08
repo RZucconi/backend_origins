@@ -5,14 +5,12 @@ const router = new express.Router()
 
 // CREATE
 router.post('/video', async (req, res) => {
-  const video = models.Video.build(req.body)
-
   try {
+    const video =  await models.Video.build(req.body)
     await video.save()
     res.status(201).send(video)
   } catch (err) {
-    console.log(err)
-    res.status(400).send()
+    res.status(400).send(err.message)
   }
 })
 
@@ -39,8 +37,7 @@ router.get('/videos', async (req, res) => {
 
     res.send(videos)
   } catch (err) {
-    console.log(err)
-    res.status(400).send()
+    res.status(400).send(err.message)
   }
 })
 
@@ -62,7 +59,7 @@ router.get('/video/:id', async (req, res) => {
 
     res.send(video)
   } catch (err) {
-    res.status(400).send()
+    res.status(400).send(err.message)
   }
 })
 
@@ -93,7 +90,7 @@ router.patch('/video/:id', async (req, res) => {
 
     res.send(await models.Video.findByPk(id))
   } catch (err) {
-    res.status(400).send(err)
+    res.status(400).send(err.message)
   }
 })
 
@@ -118,7 +115,7 @@ const addTag = (req, res) => {
       return res.status(200).send(video)
     })
   })
-  .catch((err) => res.status(400).send(err))
+  .catch((err) => res.status(400).send(err.message))
 }
 
 router.put('/video/add_tag', addTag)
@@ -141,7 +138,7 @@ router.delete('/video/:id', async (req, res) => {
     })
     res.sendStatus(200)
   } catch (err) {
-    res.status(400).send(err)
+    res.status(400).send(err.message)
   }
 })
 

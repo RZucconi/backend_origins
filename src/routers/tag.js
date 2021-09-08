@@ -5,14 +5,12 @@ const router = new express.Router()
 
 // CREATE
 router.post('/tag', async (req, res) => {
-  const tag = models.Tag.build(req.body)
-
   try {
+    const tag = await models.Tag.build(req.body)
     await tag.save()
     res.status(201).send(tag)
   } catch (err) {
-    console.log(err)
-    res.status(400).send(err)
+    res.status(400).send(err.message)
   }
 })
 
@@ -39,7 +37,7 @@ router.get('/tag/:id/videos', async (req, res) => {
 
     res.send(result)
   } catch (err) {
-    res.status(400).send()
+    res.status(400).send(err.message)
   }
 })
 
@@ -61,7 +59,7 @@ router.delete('/tag/:id', async (req, res) => {
     })
     res.sendStatus(200)
   } catch (err) {
-    res.status(400).send(err)
+    res.status(400).send(err.message)
   }
 })
 
@@ -81,7 +79,7 @@ router.get('/tags', async (req, res) => {
 
     res.send(tags)
   } catch (err) {
-    res.status(400).send()
+    res.status(400).send(err.message)
   }
 })
 
@@ -97,7 +95,7 @@ router.get('/tag/:id', async (req, res) => {
 
     res.send(tag)
   } catch (err) {
-    res.status(400).send()
+    res.status(400).send(err.message)
   }
 })
 
@@ -128,7 +126,7 @@ router.patch('/tag/:id', async (req, res) => {
 
     res.send(await models.Tag.findByPk(id))
   } catch (err) {
-    res.status(400).send(err)
+    res.status(400).send(err.message)
   }
 })
 
