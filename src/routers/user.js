@@ -31,7 +31,7 @@ router.post('/user/login', async (req, res) => {
     .then((token) => {
       res.send({user, token})
     })
-    .catch((err) => res.send(err.message))
+    .catch ((err) => res.send(err.message))
 })
 
 // Ajout d'une video dans une table favoris
@@ -55,7 +55,7 @@ router.post('/user/add_favorite', auth, async (req, res) => {
   .then((favorite) => {
     res.send({favorite})
   })
-  .catch((err) => {
+  .catch ((err) => {
     res.send(err.message)
   })
 })
@@ -110,7 +110,7 @@ router.patch('/user/me', auth, async (req, res) => {
     .then(hash => {
       req.body.password = hash
     })
-    .catch((err) => {
+    .catch ((err) => {
       throw new Error()
     })
     await models.User.update(req.body, {
@@ -147,25 +147,6 @@ router.delete('/user/logoutAll', auth, async (req, res) => {
     await models.Token.destroy({
       where: {
         user_id: req.user.dataValues.id
-      }
-    })
-    res.sendStatus(200)
-  } catch (err) {
-    res.status(400).send(err.message)
-  }
-})
-
-router.delete('/user/me/delete', auth, async (req, res) => {
-  const id = req.user.dataValues.id
-  const user = await models.User.findByPk(id)
-  if (user.length === 0) {
-    res.sendStatus(404)
-  }
-
-  try {
-    await models.User.destroy({
-      where: {
-        id
       }
     })
     res.sendStatus(200)

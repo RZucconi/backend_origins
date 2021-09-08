@@ -31,7 +31,7 @@ router.get('/videos', async (req, res) => {
   }
   )
     
-    if(!videos) {
+    if (!videos) {
       res.sendStatus(404)
     }
 
@@ -44,7 +44,7 @@ router.get('/videos', async (req, res) => {
 router.get('/video/:id', async (req, res) => {
   const id = req.params.id
 
-  try{
+  try {
     const video = await models.Video.findByPk(id, {
       order: [["createdAt", "DESC"]],
       include: [{
@@ -53,7 +53,7 @@ router.get('/video/:id', async (req, res) => {
       }]
     })
     
-    if(!video) {
+    if (!video) {
       res.status(404).send({ message: 'Video Not Found.' })
     }
 
@@ -77,8 +77,8 @@ router.patch('/video/:id', async (req, res) => {
   }
 
   // Check if video already exist
-  if (!video.length === 0) {
-    res.sendStatus(404)
+  if (!video) {
+    res.status(404).send({ message: 'Video Not Found.' })
   }
 
   try {
@@ -100,13 +100,13 @@ const addTag = (req, res) => {
   return models.Video
   .findByPk(req.body.video_id)
   .then((video) => {
-    if(!video) {
+    if (!video) {
       return res.status(404).send({
         message: 'Video Not Found'
       })
     }
     models.Tag.findByPk(req.body.tag_id).then((tag) => {
-      if(!tag) {
+      if (!tag) {
         return res.status(404).send({
           message: 'Tag Not Found'
         })
@@ -115,7 +115,7 @@ const addTag = (req, res) => {
       return res.status(200).send(video)
     })
   })
-  .catch((err) => res.status(400).send(err.message))
+  .catch ((err) => res.status(400).send(err.message))
 }
 
 router.put('/video/add_tag', addTag)
@@ -124,12 +124,12 @@ router.put('/video/add_tag', addTag)
 router.delete('/video/:id', async (req, res) => {
   const id = req.params.id
   const video = await models.Video.findByPk(id)
-
+  
   // Check if video already exist
-  if (video.length === 0) {
-    res.sendStatus(404)
+  if (!video) {
+    return res.sendStatus(404)
   }
-
+  
   try {
     await models.Video.destroy({
       where: {

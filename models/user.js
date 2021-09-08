@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       .then(hash => {
         user.password = hash
       })
-      .catch((err) => {
+      .catch ((err) => {
         throw new Error()
       })
   })

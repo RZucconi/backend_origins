@@ -18,22 +18,22 @@ router.post('/tag', async (req, res) => {
 // Rechercher des videos par tag
 router.get('/tag/:id/videos', async (req, res) => {
   try {
-    let result = new Array() 
     const videos = await models.Video.findAll({
       include: [{
         model: models.Tag,
         as: 'tags'
       }]
     })
-
-    if(!videos) {
-      res.sendStatus(404)
+    
+    if (!videos) {
+      res.status(404).send({ message: 'Video Not Found.' })
     }
-
+    
+    let result = new Array() 
     videos.map((video) => video.tags.filter((tag) => tag.id === parseInt(req.params.id) ? result.push(video) : ''))
 
-    if(result.length === 0) {
-      res.sendStatus(404)
+    if (result[0] === undefined) {
+      res.status(404).send({ message: 'No video matches.' })
     }
 
     res.send(result)
@@ -47,8 +47,8 @@ router.delete('/tag/:id', async (req, res) => {
   const id = req.params.id
   const tag = await models.Tag.findByPk(id)
 
-  // Check if video already exist
-  if (tag.length === 0) {
+  // Check if tag already exist
+  if (!tag) {
     res.sendStatus(404)
   }
 
@@ -74,8 +74,8 @@ router.get('/tags', async (req, res) => {
     order: [["createdAt", "DESC"]]
   })
     
-    if(!tags) {
-      res.sendStatus(404)
+    if (!tags) {
+      res.status(404).send({ message: 'Tag Not Found.' })
     }
 
     res.send(tags)
@@ -87,11 +87,11 @@ router.get('/tags', async (req, res) => {
 router.get('/tag/:id', async (req, res) => {
   const id = req.params.id
 
-  try{
+  try {
     const tag = await models.Tag.findByPk(id)
-    
-    if(tag.length === 0) {
-      res.sendStatus(404)
+
+    if (!tag) {
+      res.status(404).send({ message: 'Tag Not Found.' })
     }
 
     res.send(tag)
@@ -114,7 +114,7 @@ router.patch('/tag/:id', async (req, res) => {
   }
 
   // Check if tag already exist
-  if (tag.length === 0) {
+  if (!tag) {
     res.sendStatus(404)
   }
 
