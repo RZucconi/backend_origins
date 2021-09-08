@@ -15,6 +15,7 @@ router.post('/tag', async (req, res) => {
 })
 
 // READ
+// Rechercher des videos par tag
 router.get('/tag/:id/videos', async (req, res) => {
   try {
     let result = new Array() 

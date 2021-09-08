@@ -4,15 +4,16 @@ const models = require('../../models')
 const router = new express.Router()
 const auth = require('../middleware/auth') 
 const bcrypt = require('bcrypt')
+const sequelize = require('sequelize')
 
 const { findByCredentials, generateAuthToken } = require('./tools')
 
 // CREATE
 router.post('/user', async (req, res) => {
   try {
-    const user = await models.User.build(req.body)
-    await user.save()
-    res.status(201).send(user)
+    const newUser = await models.User.build(req.body)
+    await newUser.save()
+    res.status(201).send(newUser)
   } catch (err) {
     res.status(400).send(err.message)
   }
@@ -33,9 +34,62 @@ router.post('/user/login', async (req, res) => {
     .catch((err) => res.send(err.message))
 })
 
+// Ajout d'une video dans une table favoris
+router.post('/user/add_favorite', auth, async (req, res) => {
+  const alreadyExist = await models.Favorite.findOne({
+    where: {
+      video_id: req.body.video_id,
+      user_id: req.user.dataValues.id
+    }
+  })
+
+  if (alreadyExist) {
+    return res.status(403).send({message: 'A favorite of this video already exist for this user.'})
+  }
+
+  await models.Favorite
+  .create({
+    video_id: req.body.video_id,
+    user_id: req.user.dataValues.id
+  })
+  .then((favorite) => {
+    res.send({favorite})
+  })
+  .catch((err) => {
+    res.send(err.message)
+  })
+})
+
 // READ
-router.get('/users/me', auth, async (req, res) => {
+router.get('/users/me', auth, (req, res) => {
   res.send(req.user)
+})
+
+router.get('/users/me/favorite', auth, async (req, res) => {
+  const Op = sequelize.Op
+  try {
+    const favorites = await models.Favorite.findAll({where: {
+      user_id: req.user.dataValues.id
+    }})
+    if (favorites.length === 0) {
+      return res.status(404).send({message: 'No Favorite Video Found'})
+    }
+    const videoIds = new Array() 
+    favorites.filter((favorite) => favorite.dataValues ? videoIds.push({ id: favorite.dataValues.video_id }) : '')
+    
+    const results = await models.Video.findAll({
+      where: {
+        [Op.or]: videoIds
+      },
+      include: [{
+        model: models.Tag,
+        as: 'tags'
+      }]
+    })
+    res.status(200).send(results)
+  } catch (err) {
+    return res.status(400).send(err.message)
+  }
 })
 
 // UPDATE

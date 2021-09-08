@@ -53,8 +53,8 @@ router.get('/video/:id', async (req, res) => {
       }]
     })
     
-    if(video.length === 0) {
-      res.sendStatus(404)
+    if(!video) {
+      res.status(404).send({ message: 'Video Not Found.' })
     }
 
     res.send(video)
@@ -77,7 +77,7 @@ router.patch('/video/:id', async (req, res) => {
   }
 
   // Check if video already exist
-  if (video.length === 0) {
+  if (!video.length === 0) {
     res.sendStatus(404)
   }
 

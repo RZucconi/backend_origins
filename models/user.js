@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         as: 'tokens'
       })
+
+      User.hasMany(models.Favorite, {
+        foreignKey: 'user_id',
+        as: 'favorites'
+      })
     }
   };
   User.init({
