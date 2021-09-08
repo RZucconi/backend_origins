@@ -6,7 +6,7 @@
 
 ### Installation process:
 
-###  1 - run your postgresql server and create your postgres database
+###  1 - run your postgresql server and create 2 database (one for development, one for test)
 ###  In your current folder: 
 ###  2 - npm install
 ###  3 - mkdir env && touch ./env/dev.env && touch ./env/test.env
